@@ -1,0 +1,16 @@
+{
+  "name": "node_snatch",
+  "version": "1.0.0",
+  "description": "一个根据链接地址抓取标题数据，内容和图片并响应的示例",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "author": "Wesson Charles",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "iconv": "^2.2.1",
+    "jquery": "^3.1.1",
+    "jsdom": "^9.9.1"
+  }
+}
