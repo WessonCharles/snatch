@@ -1,7 +1,8 @@
 global.path_root = __dirname;
 
 var express = require('express');
-var $ = require(path_root+"/jquery/jq").jq();
+var cheerio = require("cheerio");
+var server = require(path_root+"/jquery/jq").jq();
 // var exec = require('child_process').exec; 
 
 var debug = require("debug")("node_snatch");
@@ -22,26 +23,22 @@ router.use(function timeLog(req, res, next) {
 })
 router.get("/getSnatchContent",function(req,res){
 	var reqUrl = req.query.url;
-	/***执行系统脚本实现方式***/
-	// var cmdStr = 'curl '+reqUrl;
-	// exec(cmdStr, function(err,stdout,stderr){
-	//     if(err) {
-	//         console.log('get weather api error:'+stderr);
-	//     } else {
-	//         var data = JSON.parse(stdout);
-	//         console.log(data);
-	//     }
-	// });
-	/**
-	 * jquery实现方法
-	 */
-	$.get(reqUrl, "gbk", function(window,html) {
+	server.get(reqUrl, function(data) {
+		if (data) {
+			var $ = cheerio.load(data);
+			var title = $("title").text();
+		    var img = $("img:first").attr("src");
+		    var p = $("p:first").text().Substring(0,50);
+
+			console.log("done");
+		} else {
+		  	console.log("error");
+		}
 	    //html = $(html);
-	    //var title = html.find("title").text();
-	    //var img = html.find("img:first").attr("src");
-	    //var p = html.find("p:first").text().Substring(0,50);
 	    res.send({
-	    	html:html
+	    	title:title,
+	    	img:img,
+	    	content:content
 	    })
 	})
 }); 
