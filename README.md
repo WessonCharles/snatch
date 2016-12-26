@@ -3,13 +3,18 @@
 
 __支持http和https__
 
-#请求方式
+#使用方法
+这里 我已将其抽取为一个公共restful,可直接调用获取
+```javascript
+  http://snatch.chqiangs.com/getSnatchContent?url=要抓取的地址
+```
+#示例代码
 <small>angular代码示例</small>
 
 ```javascript
   var originUrl = "http://snatch.chqiangs.com";
   var reg = "http://www.baidu.com";//要抓取的地址
-  $http.get(testUrl+"/getSnatchContent?url="+reg).success(function(data){
+  $http.get(originUrl+"/getSnatchContent?url="+reg).success(function(data){
       var html = $(data.content);//body中的内容
       scope.title = data.title;//链接的标题
       var imgs = [];
