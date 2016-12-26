@@ -8,6 +8,10 @@ var debug = require("debug")("node_snatch");
 var app = express();
 
 app.use(function (req, res,next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
 var router = express.Router();
@@ -17,7 +21,7 @@ router.use(function timeLog(req, res, next) {
   next();
 })
 router.get("/getSnatchContent",function(req,res){
-	var reqUrl = req.param("url");
+	var reqUrl = req.query.url;
 	/***执行系统脚本实现方式***/
 	// var cmdStr = 'curl '+reqUrl;
 	// exec(cmdStr, function(err,stdout,stderr){
@@ -31,16 +35,15 @@ router.get("/getSnatchContent",function(req,res){
 	/**
 	 * jquery实现方法
 	 */
-	$.get(reqUrl, "gbk", function(html) {
-	    var title = html.find("title").text();
-	    var img = html.find("img:first").attr("src");
-	    var p = html.find("p:first").text().Substring(0,50);
+	$.get(reqUrl, "gbk", function(window,html) {
+	    //html = $(html);
+	    //var title = html.find("title").text();
+	    //var img = html.find("img:first").attr("src");
+	    //var p = html.find("p:first").text().Substring(0,50);
 	    res.send({
-	    	title:title,
-	    	img:img,
-	    	content:p
+	    	html:html
 	    })
 	})
 }); 
-
+app.use(router);
 module.exports = app;

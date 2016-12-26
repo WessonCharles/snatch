@@ -20,16 +20,17 @@ module.exports.jq = function(){
                 html = new Buffer(html, 'binary');
                 if (charset) {
                     charset = {gbk:'gbk'}[charset] || 'gbk';
-                    var conv = new Iconv(charset, 'utf8');
-                    html = conv.convert(html);
+//                    var conv = new Iconv(charset, 'utf8');
+//                    html = conv.convert(html);
                 }
                 html = html.toString();
  
                 jsdom.env({
                     html: html,
                     done: function (errors, window) {
-                        var result = jquery(window)("html");
-                        callback(result);
+                        var result = window.document.documentElement;
+                        
+			callback(result,html);
                     }
                 });
             });
