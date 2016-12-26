@@ -27,8 +27,7 @@ router.get("/getSnatchContent",function(req,res){
 		if (data) {
 			var $ = cheerio.load(data);
 			var title = $("title").text();
-		    var img = $("img:first").attr("src");
-		    var p = $("p:first").text().Substring(0,50);
+		    	var p = $("body").html();
 
 			console.log("done");
 		} else {
@@ -37,8 +36,7 @@ router.get("/getSnatchContent",function(req,res){
 	    //html = $(html);
 	    res.send({
 	    	title:title,
-	    	img:img,
-	    	content:content
+	    	content:p
 	    })
 	})
 }); 
